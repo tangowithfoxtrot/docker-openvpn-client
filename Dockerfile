@@ -3,7 +3,7 @@ FROM alpine:3.14
 ARG IMAGE_VERSION
 ARG BUILD_DATE
 
-LABEL source="github.com/wfg/docker-openvpn-client"
+LABEL source="github.com/tangowithfoxtrot/docker-openvpn-client"
 LABEL version="$IMAGE_VERSION"
 LABEL created="$BUILD_DATE"
 
@@ -16,12 +16,14 @@ RUN apk add --no-cache \
         bind-tools \
         dante-server \
         openvpn \
+        curl \
+        fish \
         tinyproxy
 
 RUN mkdir -p /data/vpn
 
 COPY data/ /data
 
-HEALTHCHECK CMD ping -c 3 1.1.1.1 || exit 1
+HEALTHCHECK CMD ping -c 3 9.9.9.9 || exit 1
 
 ENTRYPOINT ["/data/scripts/entry.sh"]
